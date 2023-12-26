@@ -16,7 +16,7 @@ export default function NewPage({ params }) {
           setDescription(data.description);
         });
     }
-  }, []);
+  }, [params.id]);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -31,9 +31,6 @@ export default function NewPage({ params }) {
           description,
         }),
       });
-
-      const data = await res.json();
-      console.log(data);
     } else {
       const res = await fetch('/api/tasks', {
         method: 'POST',
@@ -45,20 +42,17 @@ export default function NewPage({ params }) {
           description,
         }),
       });
-
-      const data = await res.json();
-      console.log(data);
     }
 
-    router.refresh();
     router.push('/');
+    router.refresh();
   }
 
   return (
     <main className="h-screen flex justify-center items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-slate-800 p-10 lg:w-1/4 md:w-1/2"
+        className="bg-slate-800 p-10 lg:w-1/4 md:w-1/2 rounded-md shadow-md"
       >
         <label htmlFor="title" className="text-gray-400 font-bold text-sm">
           Title of the task
@@ -69,7 +63,7 @@ export default function NewPage({ params }) {
           placeholder="Enter a title "
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="p-2 mb-4 w-full text-sm outline-none text-slate-900"
+          className="p-2 mb-4 w-full text-sm outline-none text-slate-900 rounded-md"
         />
         <label
           htmlFor="description"
@@ -83,7 +77,7 @@ export default function NewPage({ params }) {
           placeholder="Enter a description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="p-2 mb-4 w-full text-sm outline-none text-slate-900"
+          className="p-2 mb-4 w-full text-sm outline-none text-slate-900 rounded-md"
         ></textarea>
         <button
           type="submit"
@@ -91,6 +85,21 @@ export default function NewPage({ params }) {
         >
           {params.id ? 'Update' : 'Create'}
         </button>
+        {params.id && (
+          <button
+            onClick={async () => {
+              const res = await fetch(`/api/tasks/${params.id}`, {
+                method: 'DELETE',
+              });
+
+              router.refresh();
+              router.push('/');
+            }}
+            className="text-sm bg-red-500 py-2 w-full font-bold rounded-md mt-2"
+          >
+            Delete
+          </button>
+        )}
       </form>
     </main>
   );
