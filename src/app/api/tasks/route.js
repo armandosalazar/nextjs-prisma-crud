@@ -4,4 +4,8 @@ function GET(req) {
   return NextResponse.json({ message: 'Hello from /api/tasks' });
 }
 
-export { GET };
+async function POST(req) {
+  return NextResponse.json(await req.json());
+}
+
+export { GET, POST };
