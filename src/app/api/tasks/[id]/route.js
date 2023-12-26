@@ -11,16 +11,37 @@ export async function GET(_request, { params: { id } }) {
   return NextResponse.json(task);
 }
 
-export function PUT(request, { params: { id } }) {
-  return NextResponse.json({
-    message: `Hello from /api/tasks/[${id}]`,
-    id: id,
-  });
+export async function PUT(request, { params: { id } }) {
+  try {
+    const data = await request.json();
+
+    const task = await Prisma.task.update({
+      where: {
+        id: Number(id),
+      },
+      data: data,
+    });
+
+    return NextResponse.json(task);
+  } catch (error) {
+    return NextResponse.json({
+      error: error.meta.cause,
+    });
+  }
 }
 
-export function DELETE(request, { params: { id } }) {
-  return NextResponse.json({
-    message: `Hello from /api/tasks/[${id}]`,
-    id: id,
-  });
+export async function DELETE(_request, { params: { id } }) {
+  try {
+    const task = await Prisma.task.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    return NextResponse.json(task);
+  } catch (error) {
+    return NextResponse.json({
+      error: error.meta.cause,
+    });
+  }
 }
