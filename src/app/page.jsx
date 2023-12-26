@@ -1,4 +1,5 @@
 import Prisma from '@/libs/prisma';
+import TaskCard from '@/components/TaskCard';
 
 async function loadTask() {
   // get data with fetch
@@ -10,7 +11,7 @@ async function loadTask() {
   return await Prisma.task.findMany();
 }
 
-export default async function Home() {
+export default async function HomePage() {
   const tasks = await loadTask();
   console.log(tasks);
 
@@ -19,16 +20,7 @@ export default async function Home() {
       <h1 className="text-3xl font-bold my-5">Home page</h1>
       <section className="grid grid-cols-3 gap-3">
         {tasks.map((task) => {
-          return (
-            <article
-              key={task.id}
-              className="bg-slate-900 p-5 hover:bg-slate-800 hover:cursor-pointer"
-            >
-              <h2 className="text-2xl font-bold">{task.title}</h2>
-              <p>{task.description}</p>
-              <p>{new Date(task.createdAt).toLocaleDateString()}</p>
-            </article>
-          );
+          return <TaskCard key={task.id} task={task} />;
         })}
       </section>
     </main>
