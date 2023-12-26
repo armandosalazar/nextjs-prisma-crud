@@ -1,11 +1,23 @@
-const { NextResponse } = require('next/server');
+import { NextResponse } from 'next/server';
+import Prisma from '@/libs/prisma';
 
-function GET(req) {
-  return NextResponse.json({ message: 'Hello from /api/tasks' });
+async function GET() {
+  const tasks = await Prisma.task.findMany();
+
+  return NextResponse.json(tasks);
 }
 
-async function POST(req) {
-  return NextResponse.json(await req.json());
+async function POST(request) {
+  const { title, description } = await request.json();
+
+  const task = await Prisma.task.create({
+    data: {
+      title,
+      description,
+    },
+  });
+
+  return NextResponse.json(task);
 }
 
 export { GET, POST };
