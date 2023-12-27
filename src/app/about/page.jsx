@@ -13,7 +13,7 @@ function AboutPage() {
         qui, nesciunt, quaerat laborum illo nihil eaque sint. Nemo eligendi quia
         placeat itaque blanditiis numquam quod, quaerat sit cumque quisquam
         consequuntur, esse iste distinctio officiis ipsum sed ab accusantium
-        dicta non!
+        dicta non {'<3'}!
       </p>
     </main>
   );
