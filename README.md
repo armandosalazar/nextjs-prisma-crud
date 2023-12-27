@@ -40,3 +40,10 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 - `npx prisma init --datasource-provider sqlite`
 - `npx prisma migrate dev --name init`
 - `npx prisma studio`
+
+## Deploy
+- `npx prisma migrate dev`
+- `npx prisma generate`
+- `npm install vercel --save-dev`
+- `npx vercel login`
+- `npx vercel`

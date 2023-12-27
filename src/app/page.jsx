@@ -1,6 +1,8 @@
 import Prisma from '@/libs/prisma';
 import TaskCard from '@/components/TaskCard';
 
+export const dynamic = 'force-dynamic';
+
 async function loadTask() {
   // get data with fetch
   // const res = await fetch('http://localhost:3000/api/tasks');
